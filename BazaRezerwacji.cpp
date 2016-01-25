@@ -24,6 +24,8 @@ public:
     virtual ~BazaRezerwacji();
     
     void wyswietlWszystkie();
+    multimap<string, T> getM() const;
+    void dodaj(string, T);
 private:
     multimap<string, T> m;
 
@@ -35,9 +37,15 @@ BazaRezerwacji<T>::BazaRezerwacji() {
 
 template <class T>
 void BazaRezerwacji<T>::wyswietlWszystkie(){
-    for (T* i=m.begin(); i<m.end(); i++){
-        cout >> *i;
+    typename multimap<string, T>::iterator it;
+    for (it = m.begin(); it!=m.end(); ++it){
+        cout << it->first << endl;           
     }
+}
+
+template <class T>
+multimap<string, T> BazaRezerwacji<T>::getM() const {
+    return m;
 }
 
 template <class T>
@@ -47,4 +55,10 @@ BazaRezerwacji<T>::BazaRezerwacji(const BazaRezerwacji& orig) {
 template <class T>
 BazaRezerwacji<T>::~BazaRezerwacji() {
 }
+
+template<class T>
+void BazaRezerwacji<T>::dodaj(string s, T t) {
+    m.insert(std::pair<string,T>(s,t));
+}
+
 
