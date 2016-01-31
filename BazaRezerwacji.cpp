@@ -29,12 +29,12 @@ template <class T> class BazaRezerwacji {
 public:
     BazaRezerwacji(vector<string>,vector<int>);
     BazaRezerwacji(const BazaRezerwacji& orig);
-    virtual ~BazaRezerwacji();
-    
+    virtual ~BazaRezerwacji();    
     void wyswietlWszystkie();
     multimap<string, T> getM() const;
     void dodaj(string, T);
     void wypiszNaglowki();
+
 private:
     multimap<string, T> mm_;
     vector<string> naglowki_;
@@ -104,6 +104,8 @@ public:
         
     }
     
+    
+    
     void wyswietlWszystkie(){
         cout<<endl<<setw(40)<<"ZAWARTOŚĆ BAZY\n";
         map<int, Bilet*>::iterator it;
@@ -134,8 +136,9 @@ public:
     }
     
     void zapisz(){
-        ofstream wy;
+        ofstream wy;        
         wy.open("baza.txt");
+//        wy<<"BAZA"<<endl;
         map<int, Bilet*>::iterator it;
         for (it = mm_.begin(); it!=mm_.end(); it++){
             it->second->zapisz(wy);
@@ -151,31 +154,37 @@ public:
         string typ;
         int t;
         int l=0;;
-//        we>>typ;
-        while(!we.eof()){
-          we>>typ;
-            if (typ=="MORSKI"){ t=1;
-            } else if (typ=="LOTNICZY"){ t=2;
-            } else if (typ=="LACZONY"){ t=3; l=1-l;   
-                if(l){
-                   bl = (BiletLaczony*)wczytajBilet(we, t);
-//                   bl->wyswietl();
+        we>>typ;
+        
+        if(!we.eof()){
+//            we.close();
+            we.seekg(ios::beg);
+                
+            while(!we.eof()){
+                we>>typ;
+                if (typ=="MORSKI"){ t=1;
+                } else if (typ=="LOTNICZY"){ t=2;
+                } else if (typ=="LACZONY"){ t=3; l=1-l;   
+                    if(l){
+                       bl = (BiletLaczony*)wczytajBilet(we, t);
+    //                   bl->wyswietl();
+                    }
+                    else{
+                        dodaj(bl);
+                    }
+                    continue;
                 }
-                else{
-                    dodaj(bl);
-                }
-                continue;
-            }
-      
-            b = wczytajBilet(we, t);
-//            b->wyswietl();
 
-            if(l){
-                bl->dodaj(b);
-            }
-            else dodaj(b);
+                b = wczytajBilet(we, t);
+    //            b->wyswietl();
+
+                if(l){
+                    bl->dodaj(b);
+                }
+                else dodaj(b);
+            }        
+        we.close();
         }        
-        we.close();        
     }
     
     Bilet* wczytajBilet(ifstream &we, int typ){
@@ -200,6 +209,14 @@ public:
             }
         }
         
+    }
+    
+    BazaRezerwacji<Bilet> &operator-=(int id){
+        usun(id);
+    }
+    
+    BazaRezerwacji<Bilet> &operator+=(Bilet *b){
+        dodaj(b);
     }
 
 private:

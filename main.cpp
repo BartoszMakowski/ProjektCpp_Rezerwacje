@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
                 cout<<"\nPODAJ ID WYBRANEGO BILETU.\nID: ";
                 cin>>odp;
                 odp -= bilety[0]->GetId();
-                mojaBaza.dodaj(bilety[odp/10]);
+                mojaBaza+=(bilety[odp/10]);
                 
                 break;
             }
@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
                 cout<<"PODAJ ID REZERWACJI, NUMER LEWEGO BUTA I NAZWISKO PANIENSKIE MATKI.\n"
                         "ZACZNIJ OD ID.\n";
                 cin>>odp;
-                mojaBaza.usun(odp);
+                mojaBaza-=(odp);
                 break;
             }
             
