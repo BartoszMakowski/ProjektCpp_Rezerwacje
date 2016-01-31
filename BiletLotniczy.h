@@ -20,13 +20,13 @@
 class BiletLotniczy : public Bilet {
 public:
     BiletLotniczy();
+    BiletLotniczy(int, Polaczenie*, string, float, unsigned int,float, unsigned int, unsigned int);
     BiletLotniczy(string, string, int);
     BiletLotniczy(const BiletLotniczy& orig);
     virtual ~BiletLotniczy();
     int GetLiczbaSpadochronow_() const;
     virtual string GetTyp();
-
-
+    virtual void zapisz(ofstream&);
     virtual void wyswietl();
 
 private:

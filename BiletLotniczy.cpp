@@ -20,6 +20,14 @@ BiletLotniczy::BiletLotniczy() : Bilet(){
     liczbaSpadochronow_ = rand() % 4;
 }
 
+BiletLotniczy::BiletLotniczy(int id, Polaczenie *polacznie, string data, float cena,
+        unsigned int liczbaOsob,
+        float ulga, unsigned int klasa, unsigned int spadochrony)
+            :Bilet(id, polacznie, data, cena, liczbaOsob, ulga, klasa){
+    liczbaSpadochronow_ = spadochrony;
+}
+
+
 BiletLotniczy::BiletLotniczy(string skad, string dokad, int id) : Bilet(skad, dokad, id){
     
 }
@@ -43,5 +51,12 @@ void BiletLotniczy::wyswietl() {
     Bilet::wyswietl();
     cout<<setw(14)<<"SPADOCHRONY: "<<setw(3)<<liczbaSpadochronow_<<" | ";
 }
+
+void BiletLotniczy::zapisz(ofstream& wy) {
+    wy<<endl<<GetTyp()<<endl;
+    Bilet::zapisz(wy);
+    wy<<liczbaSpadochronow_;
+}
+
 
 

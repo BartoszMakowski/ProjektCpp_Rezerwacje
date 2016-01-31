@@ -16,8 +16,12 @@
 #include <iostream>
 #include <vector>
 #include <string.h>
+#include <fstream>
 
 #include "Bilet.h"
+#include "BiletMorski.h"
+#include "BiletLotniczy.h"
+#include "BiletLaczony.h"
 
 using namespace std;
 
@@ -112,8 +116,9 @@ public:
     multimap<string, Bilet> getM() const;
     
     void dodaj(Bilet *b){
-        b->wyswietl();
+//        b->wyswietl();
         mm_.insert(std::pair<int, Bilet*>(b->GetId(),b));
+        zapisz();
     }
     
     void usun(int id){        
@@ -121,10 +126,80 @@ public:
             cout<<"\nANULOWANO REZERWACJE: ";
             mm_.at(id)->wyswietl();
             mm_.erase(id);
+            zapisz();
         }
         else{
             cout<<"\nNIE WIESZ, KOGO CHCESZ OSZUKAC.\nBRAK REZERWACJI O PODANYM NUMERZE.";
         }
+    }
+    
+    void zapisz(){
+        ofstream wy;
+        wy.open("baza.txt");
+        map<int, Bilet*>::iterator it;
+        for (it = mm_.begin(); it!=mm_.end(); it++){
+            it->second->zapisz(wy);
+        }
+        wy.close();        
+    }
+    
+    void wczytaj(){
+        ifstream we;
+        Bilet *b;
+        BiletLaczony *bl;
+        we.open("baza.txt");
+        string typ;
+        int t;
+        int l=0;;
+//        we>>typ;
+        while(!we.eof()){
+          we>>typ;
+            if (typ=="MORSKI"){ t=1;
+            } else if (typ=="LOTNICZY"){ t=2;
+            } else if (typ=="LACZONY"){ t=3; l=1-l;   
+                if(l){
+                   bl = (BiletLaczony*)wczytajBilet(we, t);
+//                   bl->wyswietl();
+                }
+                else{
+                    dodaj(bl);
+                }
+                continue;
+            }
+      
+            b = wczytajBilet(we, t);
+//            b->wyswietl();
+
+            if(l){
+                bl->dodaj(b);
+            }
+            else dodaj(b);
+        }        
+        we.close();        
+    }
+    
+    Bilet* wczytajBilet(ifstream &we, int typ){
+        float cena, ulga;
+        int id, miejsca, klasa, bonus;
+        string skad, dokad, data;
+
+        we>>id>>skad>>dokad>>data>>cena>>miejsca>>ulga>>klasa;
+        Polaczenie *p = new Polaczenie(skad, dokad);
+        
+        switch(typ){
+            case 1:{
+                we>>bonus;
+                return new BiletMorski(id, p, data, cena, miejsca, ulga, klasa, bonus);
+            }
+            case 2:{
+                we>>bonus;
+                return new BiletLotniczy(id, p, data, cena, miejsca, ulga, klasa, bonus);
+            }
+            case 3:{
+                return new BiletLaczony(id, p, data, cena, miejsca, ulga, klasa);
+            }
+        }
+        
     }
 
 private:

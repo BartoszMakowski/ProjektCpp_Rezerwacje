@@ -21,6 +21,12 @@ BiletLaczony::BiletLaczony() {
 
 }
 
+BiletLaczony::BiletLaczony(int id, Polaczenie *polacznie, string data, float cena,
+        unsigned int liczbaOsob, float ulga, unsigned int klasa)
+            :Bilet(id, polacznie, data, cena, liczbaOsob, ulga, klasa){
+    n_=0;
+}
+
 
 
 BiletLaczony::BiletLaczony(int n) : Bilet() {
@@ -85,4 +91,27 @@ void BiletLaczony::wyswietl() {
         cout<<"¨";
     }
 }
+
+void BiletLaczony::zapisz(ofstream& wy) {
+    wy<<endl<<GetTyp()<<endl;
+    Bilet::zapisz(wy);
+    
+    for(int i=0; i<n_; i++){
+        trasa_[i]->zapisz(wy);
+    }
+    wy<<endl<<GetTyp();
+}
+
+vector<Bilet*> BiletLaczony::GetTrasa_() const {
+    return trasa_;
+}
+
+void BiletLaczony::dodaj(Bilet *b) {
+    trasa_.push_back(b);
+    n_++;
+}
+
+
+
+
 

@@ -17,25 +17,26 @@
 #include "Polaczenie.h"
 #include <iomanip>
 #include <vector>
+#include <fstream>
 
 
 class Bilet {
 public:
     Bilet();
     Bilet(string, string, int);
-    Bilet(Polaczenie*, string, float, string, unsigned int,float, unsigned int);
+    Bilet(int, Polaczenie*, string, float, unsigned int,float, unsigned int);
     Bilet(const Bilet& orig);
     virtual ~Bilet();
     unsigned int GetKlasa() const;
     float GetUlga() const;
     unsigned int GetLiczba_miejsc() const;
-    string GetData_zakupu() const;
     float GetCena() const;
     string GetData() const;
     Polaczenie* GetP() const;
     unsigned int GetId() const;
     virtual string GetTyp() = 0;
     static string generujDate();
+    virtual void zapisz(ofstream&);
 //    virtual void wyswietlNaglowek();
 //    string *zwrocNaglowki();
 //    int* zwrocFormat();
@@ -49,7 +50,6 @@ private:
     Polaczenie* polaczenie_;
     string data_;
     float cena_;
-    string dataZakupu_;
     unsigned int liczbaMiejsc_;
     float ulga_;
     unsigned int klasa_;   

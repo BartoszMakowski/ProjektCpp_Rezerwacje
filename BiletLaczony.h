@@ -21,17 +21,22 @@
 class BiletLaczony : public Bilet {
 public:
     BiletLaczony();
+    BiletLaczony(int, Polaczenie*, string, float, unsigned int,float, unsigned int);
     BiletLaczony(int);
     BiletLaczony(const BiletLaczony& orig);
     virtual ~BiletLaczony();
     int GetCzasPrzesiadki_() const;
     virtual string GetTyp();
     virtual void wyswietl();
+    virtual void zapisz(ofstream&);
+    vector<Bilet*> GetTrasa_() const;
+    void dodaj(Bilet*);
 
 private:
     int czasPrzesiadki_;
     vector <Bilet*> trasa_;
     int n_;
+    
 };
 
 #endif /* BILETLACZONY_H */

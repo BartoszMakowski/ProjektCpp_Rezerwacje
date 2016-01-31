@@ -20,10 +20,10 @@ BiletMorski::~BiletMorski() {
 
 }
 
-BiletMorski::BiletMorski(Polaczenie *polacznie, string data, float cena,
-        string dataZakupu, unsigned int liczbaOsob,
+BiletMorski::BiletMorski(int id, Polaczenie *polacznie, string data, float cena,
+        unsigned int liczbaOsob,
         float ulga, unsigned int klasa, unsigned int szalupy)
-            :Bilet(polacznie, data, cena, dataZakupu, liczbaOsob, ulga, klasa) {
+            :Bilet(id, polacznie, data, cena, liczbaOsob, ulga, klasa) {
        
     liczbaSzalup_ = szalupy;
 }
@@ -52,6 +52,13 @@ void BiletMorski::wyswietl() {
     Bilet::wyswietl();
     cout<<setw(14)<<"SZALUPY RAT.: "<<setw(3)<<liczbaSzalup_<<" | ";
 }
+
+void BiletMorski::zapisz(ofstream& wy) {
+    wy<<endl<<GetTyp()<<endl;
+    Bilet::zapisz(wy);
+    wy<< liczbaSzalup_;
+}
+
 
 
 

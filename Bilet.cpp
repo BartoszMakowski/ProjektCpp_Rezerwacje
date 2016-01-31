@@ -39,14 +39,13 @@ Bilet::Bilet(){
     klasa_ = 1 + rand() % 5;    
 }
 
-Bilet::Bilet(Polaczenie *polaczenie, string data, float cena,
-        string dataZakupu, unsigned int liczbaOsob,
+Bilet::Bilet(int id, Polaczenie *polaczenie, string data, float cena,
+         unsigned int liczbaOsob,
         float ulga, unsigned int klasa){
-    id_ = ostatnieId_++;
+    id_ = id;
     polaczenie_ = polaczenie;
     data_ = data;
     cena_ = cena;
-    dataZakupu_ = dataZakupu;
     liczbaMiejsc_ = liczbaOsob;
     ulga_ = ulga;
     klasa_ = klasa;
@@ -76,9 +75,6 @@ unsigned int Bilet::GetLiczba_miejsc() const {
     return liczbaMiejsc_;
 }
 
-string Bilet::GetData_zakupu() const {
-    return dataZakupu_;
-}
 
 float Bilet::GetCena() const {
     return cena_;
@@ -206,4 +202,39 @@ void Bilet::losujBilety(int n, Bilet *b[], int w){
         if(w) b[i]->wyswietl();
     }    
 }
+
+void Bilet::zapisz(ofstream &wy) {
+    int i;
+    for(i=0; i< (sizeof(naglowki_)/sizeof(naglowki_[0])); i++){
+    switch(i){
+        case 0:
+            wy<<setw(format_[i])<<id_;
+            break;
+        case 1:
+            wy<<setw(format_[i])<<polaczenie_->GetSkad();
+            break;
+        case 2:
+            wy<<setw(format_[i])<<polaczenie_->GetDokad();
+            break;
+        case 3:
+            wy<<setw(format_[i])<<data_;
+            break;
+        case 4:
+            wy<<setw(format_[i])<<cena_;
+            break;
+        case 5:
+            wy<<setw(format_[i])<<liczbaMiejsc_;
+            break;
+        case 6:
+            wy<<setw(format_[i])<<ulga_;
+            break;
+        case 7:
+            wy<<setw(format_[i])<<klasa_;
+            break;
+        }
+        wy<<" ";
+    }
+        
+}
+
 

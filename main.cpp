@@ -30,7 +30,6 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-    Polaczenie *p1 = new Polaczenie("aaa","bbb");
 
     BazaRezerwacji<Bilet> mojaBaza;
     Bilet *bilety[N];
@@ -38,6 +37,8 @@ int main(int argc, char** argv) {
 //    mojaBaza.wyswietlWszystkie();
     int odp;
     int czy=1;
+    
+    mojaBaza.wczytaj();
     
     while(czy){
         cout<<endl<<"\n***BEZPIECZNY I PRRZYJAZNY SYSTEM OBSLUGI REZERWACJI***\n"
@@ -80,6 +81,7 @@ int main(int argc, char** argv) {
         }
     }
     
+    mojaBaza.zapisz();
     cout<<"\nBEZPIECZNEJ PODROZY!";
 
     return 0;
