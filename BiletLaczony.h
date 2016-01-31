@@ -14,14 +14,24 @@
 #ifndef BILETLACZONY_H
 #define BILETLACZONY_H
 
-class BiletLaczony {
+#include "Bilet.h"
+#include <vector>
+
+
+class BiletLaczony : public Bilet {
 public:
     BiletLaczony();
+    BiletLaczony(int);
     BiletLaczony(const BiletLaczony& orig);
     virtual ~BiletLaczony();
     int GetCzasPrzesiadki_() const;
+    virtual string GetTyp();
+    virtual void wyswietl();
+
 private:
     int czasPrzesiadki_;
+    vector <Bilet*> trasa_;
+    int n_;
 };
 
 #endif /* BILETLACZONY_H */

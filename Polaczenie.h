@@ -21,11 +21,14 @@ using namespace std;
 
 class Polaczenie {
 public:
+    Polaczenie();
+    Polaczenie(int);
     Polaczenie(string, string);
     Polaczenie(const Polaczenie& orig);
     virtual ~Polaczenie();
     string GetDokad() const;
     string GetSkad() const;
+    static string generujNazwe();
 private:
     string skad;
     string dokad;

@@ -14,12 +14,21 @@
 #ifndef BILETLOTNICZY_H
 #define BILETLOTNICZY_H
 
-class BiletLotniczy {
+#include "Bilet.h"
+
+
+class BiletLotniczy : public Bilet {
 public:
     BiletLotniczy();
+    BiletLotniczy(string, string, int);
     BiletLotniczy(const BiletLotniczy& orig);
     virtual ~BiletLotniczy();
     int GetLiczbaSpadochronow_() const;
+    virtual string GetTyp();
+
+
+    virtual void wyswietl();
+
 private:
     int liczbaSpadochronow_;
 

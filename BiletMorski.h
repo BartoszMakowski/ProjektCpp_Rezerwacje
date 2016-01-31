@@ -20,9 +20,14 @@
 class BiletMorski : public Bilet {
 public:
     BiletMorski();
+    BiletMorski(string, string, int);
+    BiletMorski(Polaczenie*, string, float, string, unsigned int,float, unsigned int, unsigned int);    
     BiletMorski(const BiletMorski& orig);
     virtual ~BiletMorski();
     unsigned int GetLiczbaSzalup_() const;
+    virtual string GetTyp();
+    virtual void wyswietl();
+
 private:
     unsigned int liczbaSzalup_;
 
